@@ -1,0 +1,257 @@
+\documentclass[12pt, titlepage]{article}
+\usepackage{float}
+\restylefloat{table}
+\usepackage{fullpage}
+\usepackage[round]{natbib}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{soul}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[normalem]{ulem}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=red,
+    urlcolor=blue
+}
+\usepackage[round]{natbib}
+
+\newcounter{acnum}
+\newcommand{\actheacnum}{AC\theacnum}
+\newcommand{\acref}[1]{AC\ref{#1}}
+
+\newcounter{ucnum}
+\newcommand{\uctheucnum}{UC\theucnum}
+\newcommand{\uref}[1]{UC\ref{#1}}
+
+\newcounter{mnum}
+\newcommand{\mthemnum}{M\themnum}
+\newcommand{\mref}[1]{M\ref{#1}}
+
+\title{SE 3XA3: Software Requirements Specification\\RD-B V2}
+
+\author{Team \#, Team Name
+		\\ Jason Tsui tsuij8
+		\\ Hareem Arif arifh1
+		\\ Abdul El-Rahwan elrahwaa
+}
+
+\date{\today}
+
+
+\begin{document}
+
+\maketitle
+
+\pagenumbering{roman}
+\tableofcontents
+\listoftables
+\listoffigures
+
+\begin{table}[bp]
+\caption{\bf Revision History}
+\begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
+\toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
+\midrule
+Nov 9,2018 & 1.0 & Document Creation, Use Hierarchy Between Modules, Introduction, Connection Between Requirements and Design\\
+Date 2 & 1.1 & Notes\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\newpage
+
+\pagenumbering{arabic}
+
+\section{Introduction}
+
+This a Module Guide document for the project RD-B V2 created group 31 of McMaster University SE3XA3 Fall 2018. This documents covers present module design decisions, module behavior, tracibility of module implementations, and anticipated changes to module design. This document is intended to be used as a guideline for module design and overall strucutre of the project. 
+
+\section{Anticipated and Unlikely Changes} \label{SecChange}
+
+
+\subsection{Anticipated Changes} \label{SecAchange}
+
+
+\begin{description}
+\color{blue}
+\item[\refstepcounter{acnum} \actheacnum \label{acAudio}:] Include functions to play music from Spotify.
+\color{black}
+\item[\refstepcounter{acnum} \actheacnum
+\label{acDownloader}:] Allow users of the bot to download functionalities from third-part repositories.
+\item[\refstepcounter{acnum} \actheacnum
+\label{acCustomcom}:] Allow moderator to create custom commands.
+\item[\refstepcounter{acnum} \actheacnum
+\label{acBot}:] \st{Connect to the different modules from the bot module.}
+\end{description}
+
+\subsection{Unlikely Changes} \label{SecUchange}
+
+\begin{description}
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucModules}:] Combing some of the modules that serve similar functionalities together.
+\item[\refstepcounter{ucnum} \uctheucnum \label{ucOutput}:] Moving the bot's status logs away from the terminal and into somewhere else more accessible for the user.
+
+\end{description}
+
+\section{Module Hierarchy} \label{SecMH}
+
+\begin{description}
+\item 
+\end{description}
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
+\toprule
+\textbf{Level 1} & \textbf{Level 2}\\
+\midrule
+
+{Hardware-Hiding Module} & ~ \\
+\midrule
+
+\multirow{11}{0.3\textwidth}{Behaviour-Hiding Module} & Alias\\
+& Audio\\
+& \color{blue}Com\\
+& \st{Downloader}\\
+& \st{Economy}\\
+& \color{blue}Bot\\
+& \color{black}Image\\ 
+& \st{Mod}\\
+& \st{Owner}\\
+& \st{Streams}\\
+& \st{Trivia}\\
+& \color{blue} level\\
+& \color{blue} Misc\\
+\midrule
+
+\multirow{1}{0.3\textwidth}{Software Decision Module} & {Bot module}\\
+\bottomrule
+
+\end{tabular}
+\caption{Module Hierarchy}
+\label{TblMH}
+\end{table}
+
+\section{Connection Between Requirements and Design} \label{SecConnection}
+
+The system is decomposed into modules for information hiding and separated based on the requirements of the design in the SRS. Table \ref{TblRT} highlights the connection between the requirements and implemented modules. 
+
+\section{Module Decomposition} \label{SecMD}
+
+Modules are decomposed according to the principle of ``information hiding''
+proposed by \citet{ParnasEtAl1984}.
+
+\subsection{Hardware Hiding Modules}
+
+
+\begin{description}
+\item[Secrets:]The data structure and algorithm used to implement the virtual
+  hardware.
+\item[Services:]This module serves as the interface between the hardware and software of the program. This is done automatically and abstracted by the operating system.
+\item[Implemented By:] OS
+\end{description}
+
+\subsection{Behaviour-Hiding Module}
+
+\begin{description}
+\item[Secrets:]The contents of the required behaviours.
+\item[Services:]This module serves as the external interface between the system specified by the software requirements specification and the user. This module acts as a communication layer between the hardware-hiding module and the software decision module. This is done and abstracted by the Discord application and API. 
+\item[Implemented By:] Discord application and API
+\end{description}
+
+\subsection{Input Format Module}
+
+\begin{description}
+\item[Secrets:]The format and structure of the input data.
+\item[Services:]Converts the input data from the behaviour-hiding module into the data structure used by the
+  input parameters module.
+\item[Implemented By:] RD-B V2
+\end{description}
+
+\subsection{Software Decision Module}
+
+\begin{description}
+\item[Secrets:] The design decision based on mathematical theorems, physical
+  facts, or programming considerations. The secrets of this module are
+  \emph{not} described in the SRS.
+\item[Services:] Includes data structure and algorithms used in the system that
+  do not provide direct interaction with the user. Performs logical computation and returns output to behaviour-hiding module for output. 
+  % Changes in these modules are more likely to be motivated by a desire to
+  % improve performance than by externally imposed changes.
+\item[Implemented By:] RD-B V2
+\end{description}
+
+
+\section{Traceability Matrix} \label{SecTM}
+
+This section shows two traceability matrices: between the modules and the
+requirements and between the modules and the anticipated changes.
+
+% the table should use mref, the requirements should be named, use something
+% like fref
+\begin{table}[H]
+\centering
+\begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
+\toprule
+\textbf{Req.} & \textbf{Modules}\\
+\midrule
+R1 2.2.1  & audio.py and main.py\\
+R2 2.2.2 & trivia.py\\
+R3 2.2.3 & mod.py and owner.py\\
+R4 2.2.4 & mod.py\\
+R5 2.2.5 & streams.py and owner.py and download.py\\
+R6 2.2.7 & alias.py\\
+R7 3.6.1 & mod.py\\
+R8  3.6.2 & mod.py and owner.py\\
+R9 3.8.3 & owner.py and bot.py\\
+R10 3.9.1 & display.py\\
+R11 All requirements of 3.7 & mod.py, bot.py and display.py\\
+\bottomrule
+\end{tabular}
+\caption{Trace Between Requirements and Modules}
+\label{TblRT}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
+\toprule
+\textbf{AC} & \textbf{Modules}\\
+\midrule
+ AC1 & bot.py and owner.py \\
+ AC2 & audio.py and bot.py \\
+ AC3 & bot.py and downloader.py \\
+ AC4 & bot.py and owner.py \\
+ AC5 & bot.py \\
+\bottomrule
+\end{tabular}
+\caption{Trace Between Anticipated Changes and Modules}
+\label{TblACT}
+\end{table}
+
+\section{Use Hierarchy Between Modules} \label{SecUse}
+
+ Table \ref{TblMH} outlines the hierarchy between modules.  Use hierarchy refers to modules requiring the correct function of another module in order to function correctly. 
+
+\centering
+%\includegraphics[width=0.7\textwidth]{UsesHierarchy.png}
+\caption{Use hierarchy among modules}
+\label{FigUH}
+\end{figure}
+
+\section{Gantt Schedule}
+
+   \href{3XA3 Gantt Chart.pdf}{Gantt Chart showing the project schedule.}
+
+
+%\section*{References}
+
+\bibliographystyle {plainnat}
+\bibliography {MG}
+
+\end{document}

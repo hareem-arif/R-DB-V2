@@ -1,0 +1,175 @@
+\documentclass[12,english]{article}
+\usepackage[letterpaper, portrait, margin=1in]{geometry}
+
+\usepackage{amsmath}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+\usepackage{textcomp}
+\usepackage{titlesec}
+\setcounter{secnumdepth}{4}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{placeins}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{tabto}
+\usepackage{caption}
+
+
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+      colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=black,          % color of internal links (change box color with linkbordercolor)
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=cyan           % color of external links
+}
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+\title{SE 3XA3: Module Internal Specification\\Red Discord Bot}
+\author{Team \#31, R-DB V2
+		\\ Jason Tsui tsuij8
+		\\ Hareem Arif arifh1
+		\\ Abdul Elrahwan elrahwaa
+}
+
+
+\begin{document}
+
+\maketitle
+This is an MIS for the implementation of Red Discord Bot as of 08/11/2018
+
+\begin{table}[hp]
+\caption{Revision History} \label{TblRevisionHistory}
+\begin{tabularx}{\textwidth}{llX}
+\toprule
+\textbf{Date}  & \textbf{Change}\\
+\midrule
+Nov 08,2018 & Initial implementation\\
+... & ... & ...\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+
+\date{}
+
+
+\newpage
+\tableofcontents
+\newpage
+
+        
+\section{MIS of General Module}
+		\subsection{Interface Syntax}
+		\subsubsection{Exported Access Programs}
+		\begin{tabular}[pos]{|c|c|c|c|}
+			
+			\hline
+			%	\label
+			\textbf{Name}& \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\ \hline
+			OnReady & - & String & -\\ \hline
+			OnMessage & String & String & -\\ \hline
+			OnMessageDelete & String & String & -\\ \hline
+			OnMessageEdit & String & String & -\\ \hline
+			owner & - & String & -\\ \hline
+			echo & Arguments & String & -\\ \hline
+			clear & Context, Integer & String & -\\ 
+			 \hline
+			
+		\end{tabular}
+		
+		\subsection{Interface Semantics}
+		\subsubsection{State Variables}
+			Token: String - Bot specific identification token\\
+		ONDELETE: int - Variable for blocking onMessageDelete when command !clear is called.\\
+
+		
+		\subsubsection{Environmental Variables}
+		Not Applicable
+		
+		\subsubsection{Assumptions}
+		Token variable is a valid bot token generated from the discord website.
+		
+		\subsubsection{Access Program Semantics}
+		
+		
+		onReady():
+		
+		Input: None
+		
+		Transition: None
+		
+		Output: Print 'Bot is ready'
+		
+		Exceptions: None\\
+		\\
+		
+		OnMessage(message):
+		
+		Input: Message message
+		
+		Transition: Finds the name of the message's author and content.
+		
+		Output: Printed statement in the format author: message
+		
+		Exceptions: none\\ 
+		\\
+		OnMessageDelete(message):
+		
+		Input: Message message
+		
+		Transition: If the ONDELETE variable is positive, nothing happens. Otherwise it finds the message's author, content and the channel it was sent on. Then it notifies the server that the message was deleted.
+		
+		Output: Printed statement in the format 'Message deleted by {author}'
+		
+		Exceptions: none\\ 
+		\\ 
+		OnMessageEdit(message):
+		
+		Input: Message message
+		
+		Transition: finds the message's author, content and the channel it was sent on. Then it notifies the server when the message was edited.
+		
+		Output: Printed statement in the format 'Message edited by {author}'
+		
+		Exceptions: none\\
+		\\
+		owner():
+		
+		Input: None
+		
+		Transition: None
+		
+		Output: Print Name of the server's owner.
+		
+		Exceptions: none\\
+		\\
+		echo():
+		
+		Input: *args
+		
+		Transition: Creates a variable called output and adds all the arguments into the output variable.
+		
+		Output: Print content of the output variable
+		
+		Exceptions: none\\ 
+		\\
+		clear():
+		
+		Input: Context ctx, Int amount
+		
+		Transition: Access the ONDELETE variable and adds 1 to its value. It then creates an array of 'amount' number of messages in the channel and calles the delete messages function for all of the array's contents.
+
+		Output: Prints a statement in the format 'amount' Messages cleared by admin
+		
+		Exceptions: none\\
+
+\end{document}
